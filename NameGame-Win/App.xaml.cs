@@ -45,7 +45,7 @@ namespace WillowTree.NameGame.Win
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+                rootFrame = new Frame();                
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
@@ -54,7 +54,7 @@ namespace WillowTree.NameGame.Win
                     //TODO: Load state from previously suspended application
                 }
 
-                // Place the frame in the current Window
+                // Place the frame in the current Window 
                 Window.Current.Content = rootFrame;
             }
 
