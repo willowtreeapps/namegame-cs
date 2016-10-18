@@ -9,8 +9,44 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
+
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="27" Margin="310,71,0,0" TextWrapping="Wrap" Text="Who is" VerticalAlignment="Top" Width="58"/>
+        <TextBlock x:Name="txtWhoIs" HorizontalAlignment="Left" Height="27" Margin="373,71,0,0" TextWrapping="Wrap" Text="{Binding WhoIs.Name, Mode=TwoWay}" VerticalAlignment="Top" Width="250"/>
+        <Image Source="{Binding Person1.PictureUrl, Mode=TwoWay}" Tag="{Binding Person1.Name, Mode=TwoWay}" Tapped="image1_Tapped" x:Name="image1" HorizontalAlignment="Left" Height="183" Margin="90,184,0,0" VerticalAlignment="Top" Width="203"/>
+        <Image Source="{Binding Person2.PictureUrl, Mode=TwoWay}" Tag="{Binding Person2.Name, Mode=TwoWay}" Tapped="image2_Tapped" x:Name="image2" HorizontalAlignment="Left" Height="183" Margin="335,184,0,0" VerticalAlignment="Top" Width="203"/>
+        <Image Source="{Binding Person3.PictureUrl, Mode=TwoWay}" Tag="{Binding Person3.Name, Mode=TwoWay}" Tapped="image3_Tapped" x:Name="image3" HorizontalAlignment="Left" Height="183" Margin="581,184,0,0" VerticalAlignment="Top" Width="203"/>
+        <Image Source="{Binding Person4.PictureUrl, Mode=TwoWay}" Tag="{Binding Person4.Name, Mode=TwoWay}" Tapped="image4_Tapped" x:Name="image4" HorizontalAlignment="Left" Height="183" Margin="90,414,0,0" VerticalAlignment="Top" Width="203"/>
+        <Image Source="{Binding Person5.PictureUrl, Mode=TwoWay}" Tag="{Binding Person5.Name, Mode=TwoWay}" Tapped="image5_Tapped" x:Name="image5" HorizontalAlignment="Left" Height="183" Margin="335,414,0,0" VerticalAlignment="Top" Width="203"/>
+        <Image Source="{Binding Person6.PictureUrl, Mode=TwoWay}" Tag="{Binding Person6.Name, Mode=TwoWay}" Tapped="image6_Tapped" x:Name="image6" HorizontalAlignment="Left" Height="183" Margin="581,414,0,0" VerticalAlignment="Top" Width="203"/>
+        <TextBlock x:Name="txtImage1" HorizontalAlignment="Right" Height="30" Margin="0,367,731,0" TextWrapping="Wrap" Text="{Binding Person1.Name, Mode=TwoWay}" VerticalAlignment="Top" Width="203" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed" />
+        <TextBlock x:Name="txtImage2" HorizontalAlignment="Right" Height="30" Margin="0,367,486,0" TextWrapping="Wrap" Text="{Binding Person2.Name, Mode=TwoWay}" VerticalAlignment="Top" Width="203" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed"/>
+        <TextBlock x:Name="txtImage3" HorizontalAlignment="Right" Height="30" Margin="0,367,240,0" TextWrapping="Wrap" Text="{Binding Person3.Name, Mode=TwoWay}" VerticalAlignment="Top" Width="203" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed"/>
+        <TextBlock x:Name="txtImage4" Height="30" Margin="90,597,731,0" TextWrapping="Wrap" Text="{Binding Person4.Name, Mode=TwoWay}" VerticalAlignment="Top" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed"/>
+        <TextBlock x:Name="txtImage5" Height="30" Margin="335,597,486,0" TextWrapping="Wrap" Text="{Binding Person5.Name, Mode=TwoWay}" VerticalAlignment="Top" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed"/>
+        <TextBlock x:Name="txtImage6" Height="30" Margin="581,597,240,0" TextWrapping="Wrap" Text="{Binding Person6.Name, Mode=TwoWay}" VerticalAlignment="Top" FontSize="16" Foreground="Black" TextAlignment="Center" Visibility="Collapsed"/>
+        <Image x:Name="redXImage1" HorizontalAlignment="Right" Height="153" Margin="0,190,770,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="redXImage2" HorizontalAlignment="Right" Height="153" Margin="0,190,537,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="redXImage3" HorizontalAlignment="Right" Height="153" Margin="0,190,280,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="redXImage4" HorizontalAlignment="Right" Height="153" Margin="0,422,770,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="redXImage5" HorizontalAlignment="Right" Height="153" Margin="0,422,537,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="redXImage6" HorizontalAlignment="Right" Height="153" Margin="0,422,280,0" VerticalAlignment="Top" Width="124" Source="Assets/RedX.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage1" HorizontalAlignment="Left" Height="153" Margin="130,198,0,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage2" HorizontalAlignment="Right" Height="153" Margin="0,198,527,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage3" HorizontalAlignment="Left" Height="153" Margin="620,198,0,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage4" HorizontalAlignment="Left" Height="153" Margin="130,428,0,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage5" HorizontalAlignment="Right" Height="153" Margin="0,428,537,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Image x:Name="greenCheckImage6" HorizontalAlignment="Left" Height="153" Margin="620,428,0,0" VerticalAlignment="Top" Width="124" Source="Assets/GreenCheck.png" Visibility="Collapsed" Opacity="0.5"/>
+        <Grid Margin="712,61,36,579">
+            <ListBox x:Name="listBox" Height="170" VerticalAlignment="Top" Margin="82,-28,-5,-142">
+                <ListBoxItem Content="Number of Guesses" HorizontalAlignment="Center"/>
+                <ListBoxItem Content="Correct" HorizontalAlignment="Left" Width="137"/>
+                <ListBoxItem Content="Incorrect" HorizontalAlignment="Left" Width="137"/>
+            </ListBox>
+            <TextBlock x:Name="txtCorrect" HorizontalAlignment="Right" Height="19" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" Margin="0,31,26,-50"/>
+            <TextBlock x:Name="txtIncorrect" HorizontalAlignment="Right" Height="19" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="33" Margin="0,78,26,-97"/>
+
+        </Grid>
+
     </Grid>
 </mvvm:MvxWindowsPage>
