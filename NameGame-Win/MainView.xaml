@@ -9,8 +9,39 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        
+
+    <Grid Name="imageGrid" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Margin="0,-1,0,1" RenderTransformOrigin="0.451,0.505" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="200"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBox Name="txtUserGuess" Margin="0,0,10,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.957,-1.781" Width="165"/>
+            <Button Name="btnCheck" Content="Check" Margin="10,0,10,0" VerticalAlignment="Top" Height="32" Click="ValidateGuess" RenderTransformOrigin="0.794,-1.531" Width="75"/>
+            <Button Name="btnHelpMe" Content="Help?" Margin="10,0,0,0" VerticalAlignment="Top" Click="Multiple_Choice" RenderTransformOrigin="0.461,-1.062"/>
+        </StackPanel>
+
+
+        <Grid Name="grdMultipleChoice" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Stretch" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+        </Grid>
+        <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name ="txtWhoAmI"  Text ="Guess My Name!" HorizontalAlignment="Center" Margin="0,0,0,0" Visibility="Collapsed"  VerticalAlignment="Stretch" RenderTransformOrigin="0.109,1.2"/>
+        <ProgressBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Name ="loading" HorizontalAlignment="Center" Width ="500" Height="100" Margin="0,0,0,0" VerticalAlignment="Center" Visibility="Visible" IsIndeterminate="True"/>
     </Grid>
 </mvvm:MvxWindowsPage>
