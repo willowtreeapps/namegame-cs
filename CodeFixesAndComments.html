@@ -1,0 +1,243 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Single Page Application</title>
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .app-container {
+            width: 400px;
+            margin: 0 auto 0 auto;
+        }
+
+        .image {
+            width: 100px;
+            height: 100px;
+        }
+
+        .list-container {
+            width: 100%;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container for our application -->
+    <div id="app"></div>
+
+
+    <!-- 3rd Party Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.7/react-dom.js"></script>
+
+
+    <!-- Our Application Logic -->
+    <script>
+        /*==================================================
+           API
+         ***************************************************/
+        /**
+         * Get the data from the namegame endpoint.
+         *
+         * The data comes back in the format:
+         *
+         *    [
+         *        { firstName: 'Viju,  lastName: 'Legard',  headshot: { url: '...' } },
+         *        { firstName: 'Matt', lastName: 'Seibert', headshot: { url: '...' } },
+         *        ...
+         *    ]
+         */
+        function getPersonList() {
+            return new Promise((resolve, reject) => {
+                fetch('https://willowtreeapps.com/api/v1.0/profiles')
+                    .then(response => {
+                        if (!response.ok) { //status can be 200 but it doesn't mean that it was successful, using response.ok makes more sense.
+                            reject(new Error("reason for error " + response.statusText)); // here we are not displaying a reason.
+                        }
+
+                        // make sure the heashot  exists before resolving.
+                        response.json().then(data => {
+                            if ( data !== 'undefined' && data.headshot !== 'undefined'
+                               ) resolve(data)
+                        });
+
+                    })
+                   })
+     
+        }
+
+     /**   function getPersonList() {
+            return new Promise((resolve, reject) => {
+                fetch('https://willowtreeapps.com/api/v1.0/profiles')
+                    .then(response => {
+                        if (response.status !== 200) {
+                            reject(new Error("error")); // here we are not displaying a reason. 
+                        }
+                        response.json().then(imageList => {
+                            resolve(imageList);
+                        });
+                    });
+            });
+        }
+        **
+        /*==================================================
+           DATA TRANSFORMS
+         ***************************************************/
+        function getLastName(person) {
+            return person.lastName;
+        }
+        const getFirstName = (person) => {
+            return person.firstName;
+        };
+        // headshot URLs are scheme relative //
+        // prepend http: to prevent invalid schemes like file:// or uri://
+        const getImageUrl = (person) => {
+            if (person.headshot.url == null || person.headshot.url == "")
+                return;
+            return `http:${person.headshot.url}`;
+        };
+        /**
+         * Fisher-Yates shuffle
+         */
+        function shuffleList(list) {
+            // Make a copy & don't mutate the passed in list
+            let result = list.slice(0);
+            let tmp, j, i = list.length - 1
+            for (; i > 0; i -= 1) {
+                j = Math.floor(Math.random() * (i + 1));
+                tmp = result[i];
+                result[i] = result[j];
+                result[j] = tmp;
+            }
+            return result;
+        }
+        /**
+         * Remove any people that do not have the name we are
+         * searching for.
+         */
+        function filterByName(searchForName, personList) {
+            return personList.filter((person) => {
+            /* if the user hits the back button to remove input? */
+            if  (searchForName === "" ) return  personList
+            /* if the user doesn't type in the search name in the correct format, so format before filtering */
+                let formattedName = searchForName.charAt(0).toUpperCase() + searchForName.slice(1).trim();
+                return person.firstName === formattedName || person.lastName === formattedName;
+
+            });
+        }
+        /**
+         * Takes in a property of an object list, e.g. "name" below
+         *
+         *    people = [{ name: 'Sam' }, { name: 'Jon' }, { name: 'Kevin' }]
+         *
+         * And returns a function that will sort that list, e.g.
+         *
+         *    const sortPeopleByName = sortObjListByProp('name');
+         *    const sortedPeople = sortPeopleByName(people);
+         *
+         *  We now have:
+         *
+         *    console.log(sortedPeople)
+         *    > [{ name: 'Jon' }, { name: 'Kevin' }, { name: 'Sam' }]
+         *
+         */
+       function sortObjListByProp(prop) {
+            return function(objList) {
+                // Make a copy & don't mutate the passed in list
+                let result = objList.slice(0);
+                result.sort((a, b) => {
+                    if (a[prop] < b[prop]) {
+                        return -1;
+                    }
+                    return 1;
+                });
+                return result;
+            };
+        }
+        const sortByFirstName = sortObjListByProp('firstName');
+        const sortByLastName = sortObjListByProp('lastName');
+      /*  const sortByLastName = (personList) => sortByFirstName(personList).reverse();*/
+        /*==================================================
+           VIEW (React)
+         ***************************************************/
+        const Search = (props) => React.DOM.input({
+            type: 'input',
+            onChange: props.onChange
+        });
+        const Thumbnail = (props) => React.DOM.img({
+            className: 'image',
+            src: props.src,
+      //      alt: 'No image found'
+        });
+        const ListRow = (props) => React.DOM.tr({ key: `${props.person.firstName} ${props.person.lastName}` }, [
+            React.DOM.td({ key: 'thumb' }, React.createElement(Thumbnail, { src: getImageUrl(props.person) })),
+            React.DOM.td({ key: 'first' }, null, getFirstName(props.person)),
+            React.DOM.td({ key: 'last' }, null, getLastName(props.person)),
+        ]);
+        const ListContainer = (props) => React.DOM.table({ className: 'list-container' }, [
+            React.DOM.thead({ key: 'thead' }, React.DOM.tr({}, [
+                React.DOM.th({ key: 'thumb-h' }, null, 'Thumbnail'),
+                React.DOM.th({ key: 'first-h' }, null, 'First Name'),
+                React.DOM.th({ key: 'last-h' }, null, 'Last Name')
+            ])),
+            React.DOM.tbody({ key: 'tbody' }, props.personList.map((person, i) =>
+                React.createElement(ListRow, { key: `person-${i}`, person })))
+        ]);
+        const App = React.createClass({
+            getInitialState() {
+                return {
+                    personList: [],
+                    visiblePersonList: []
+                };
+            },
+            componentDidMount() {
+                getPersonList()
+                    .then((personList) =>
+                    this.setState({
+                        personList,
+                        visiblePersonList: personList
+                        }));
+            },
+
+            _onSearch(e) {
+                this.setState({
+                    visiblePersonList: filterByName(e.target.value, this.state.personList)
+                });
+            },
+            _shuffleList() {
+                this.setState({
+                    visiblePersonList: shuffleList(this.state.visiblePersonList)
+                });
+            },
+            _sortByFirst() {
+                this.setState({
+                    visiblePersonList: sortByFirstName(this.state.visiblePersonList)
+                });
+            },
+            _sortByLast() {
+                this.setState({
+                    visiblePersonList: sortByLastName(this.state.visiblePersonList)
+                });
+            },
+            render() {
+                const { visiblePersonList } = this.state;
+                return React.DOM.div({ className: 'app-container' }, [
+                    React.createElement(Search, { key: 'search', onChange: this._onSearch }),
+                    React.DOM.button({ key: 'shuffle', onClick: this._shuffleList }, null, 'Shuffle'),
+                    React.DOM.button({ key: 'sort-first', onClick: this._sortByFirst }, null, 'Sort (First Name)'),
+                    React.DOM.button({ key: 'sort-last', onClick: this._sortByLast }, null, 'Sort (Last Name)'),
+                    React.createElement(ListContainer, { key: 'list', personList: visiblePersonList })
+                ]);
+            }
+        });
+        ReactDOM.render(
+            React.createElement(App),
+            document.getElementById('app')
+        );
+    </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+1. It is implied that the empty box is for user search input but since there is a shuffle button right next to it it makes it confusing
+for the user from a UI standpoint.
+adding a third button 'Search' and moving shuffle and Sort buttons to the right, would make it clear that the 'input' box is for search
+while the ramining buttons do not need input from the user.
+
+2. search by first or last name is case sensitive, making it case insensitive is easier as we should never depend on the user to always provide
+the program with input in the correct format.
+Also, if the input text is removed, the page should not remain blank. It should default back to the original list.
+      function filterByName(searchForName, personList) {
+            return personList.filter((person) => {
+            /* if the user hits the back button to remove input? */
+            if  (searchForName === "" ) return  personList
+            /*  format before filtering */
+                let formattedName = searchForName.charAt(0).toUpperCase() + searchForName.slice(1).trim();
+                return person.firstName === formattedName || person.lastName === formattedName;
+               
+            });
+        }
+3.         function sortObjListByProp(prop) {
+            return function(objList) {
+                // Make a copy & don't mutate the passed in list
+                let result = objList.slice(1);
+                result.sort((a, b) => {
+                    if (a[prop] < b[prop]) {
+                        return -1;
+                    }
+                    if (a[prop] > b[prop]) {
+                        return 1;
+                    }
+                    return 1; //if a[prop] equals b[prop] or a[prop] is bigger than b[prop] 
+                              //the function will always return 1 in either case
+                              // this can be simplified into one line.
+                });
+                return result;
+            };
+        }
+becomes 
+        function sortObjListByProp(prop) {
+            return function(objList) {
+                // Make a copy & don't mutate the passed in list
+                let result = objList.slice(1);// bug discussed later.
+                result.sort((a, b) => {
+                    if (a[prop] < b[prop]) {
+                        return -1;
+                    }        
+                    return 1;
+                });
+                return result;
+            };
+        }
+. 
+
+4. Sorting by last name prop is not working, it only reverses the result set of sorting the list by firstName
+so to make it sort by last name:
+const sortByLastName = sortObjListByProp('lastName'); //we should be passing lastName as parameter.
+
+5.getLastName and getFirstName have different declaration types, one is a function which could be invoked on an object and the other
+is a constant which cannot be reassigned to. Since both functions are invoked the same way, it would make more sense to have them both 
+consts.
+
+
+6. the requirement is to not mutate the passed in list, yet because the result variable doesn't get
+used to swap values at random indicies,  the code uses the list and alters the original list order not the copy. 
+also, when the result variable is used, the slice method returns a copy of the array minus element at position 0. To Correct that: 
+slice should start at 0 and not 1. After making these two changes :
+    function shuffleList(list) {
+            // Make a copy & don't mutate the passed in list
+            // 
+            let result = list.slice(0);// start at 0, do not exlcude the first element 
+            let tmp, j, i = list.length - 1
+            for (; i > 0; i -= 1) {
+                j = Math.floor(Math.random() * (i + 1));
+                tmp = result[i];
+                result[i] = result[j];
+                result[j] = tmp;// use result to shuffle
+            }
+            return result;
+        }
+The fix for the slice method parameter was also applied to the sorting function
+  function sortObjListByProp(prop)
+   function sortObjListByProp(prop) {
+            return function(objList) {
+                // Make a copy & don't mutate the passed in list
+                let result = objList.slice(0);
+                result.sort((a, b) => {
+                    if (a[prop] < b[prop]) {
+                        return -1;
+                    }        
+                    return 1;
+                });
+                return result;
+            };
+        }
+7. shuffle & sort methods: when searching for a name you might get a bigger list of the same people with the same first name.
+But the app doesn't allow sorting on the result set, instead it goes back to the full list. To fix this,
+visiblePersonList gets set and passed in as the paramter to the methods instead of the old personList.
+    _shuffleList() {
+                this.setState({
+                    visiblePersonList: shuffleList(this.state.visiblePersonList)
+                });
+Example : this would allow the user to sort the result list of searching for Matt.
+8. getPersonList() uses status code to check if the request was successfull. Instead, using response.ok does not rely on the status code number
+as that could be changed in the future. The response.ok guarantees that we are indeed looking at a successful request/response.
+the getPersonList returns a promise to resolve the imageList, however, the imageList could contain empty headshot urls,this causes an exception
+to be thrown later in the code since accessing an undefined property causes an exception.
+Instead filter the empty urls out, and only pass headshots with content in them.
+ 	     response.json().then(data => {
+                            if ( data !== 'undefined' && data.headshot !== 'undefined') 
+				resolve(data)
