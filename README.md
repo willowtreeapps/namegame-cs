@@ -28,6 +28,7 @@ When reviewing your project, we will be focusing on the following areas:
 * Code quality
 * Code correctness
 * Overall creativity
+
 Note: Feel free to include a text file describing your thoughts and approach if you feel that's appropriate. 
 
 Good luck and have fun!
