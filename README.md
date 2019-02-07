@@ -5,7 +5,7 @@ Leading scientists have proven, via science, that learning your coworkers names 
 
 ## Your mission
 
-We're only asking you to implement this on one of the platforms (iOS, Android, or UWP), but you are welcome to do as many as you'd like. All of the projects are already set up with MVVMCross to make working with multiple platforms easier, but you are welcome to remove it if you'd like to use something different.
+We're only asking you to implement this on one of the platforms (iOS or Android), but you are welcome to do as many as you'd like. All of the projects are already set up with a View Model to make working with multiple platforms easier, but you are welcome to remove it if you'd like to use a different pattern.
 
 To spruce things up, implement a few features of your choice.
 
@@ -20,7 +20,8 @@ To spruce things up, implement a few features of your choice.
 
 ## Notes:
 1. This exercise should take no more than 8 hours, please do not spend more than that!
-2. The app needs to support portrait and landscape on all mobile devices, and resizing for UWP. On Android, we ask that you do this without using the manifest flag android:configChanges. Note that we're curious how you might go about solving for destroyed activities and fragments. 
+2. The app should support portrait and landscape on all mobile devices. On Android, we ask that you do this without using the manifest flag android:configChanges. Note that we're curious how you might go about solving for destroyed activities and fragments.
+3. While you are only expected to build one platform, we are looking for you to implement it in such a way that would make sharing logic between platforms easy.
 
 When reviewing your project, we will be focusing on the following areas:
 * Code architecture

@@ -3,24 +3,18 @@ using System;
 using System.Drawing;
 
 using Foundation;
-using MvvmCross.Binding.BindingContext;
-using MvvmCross.iOS.Views;
 using UIKit;
 using WillowTree.NameGame.Core.ViewModels;
 
 namespace WillowTree.NameGame.iOS
 {
-    [MvxFromStoryboard]
-    public partial class MainView : MvxViewController
+    public partial class MainView : UIViewController
     {
-        private new MainViewModel ViewModel
-        {
-            get { return base.ViewModel as MainViewModel; }
-            set { base.ViewModel = value; }
-        }
+        private MainViewModel ViewModel { get; set; }
 
         public MainView(IntPtr handle) : base(handle)
         {
+            ViewModel = new MainViewModel();
         }
 
         public override void DidReceiveMemoryWarning()
