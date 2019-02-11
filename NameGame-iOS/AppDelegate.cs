@@ -21,6 +21,8 @@ namespace WillowTree.NameGame.iOS
             // create a new window instance based on the screen size
             Window = new UIWindow(UIScreen.MainScreen.Bounds);
 
+            Window.RootViewController = UIStoryboard.FromName("MainView", NSBundle.MainBundle).InstantiateInitialViewController();
+
             // make the window visible
             Window.MakeKeyAndVisible();
 
