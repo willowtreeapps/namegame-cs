@@ -23,11 +23,12 @@ To spruce things up, implement a few features of your choice.
 2. The app should support portrait and landscape on all mobile devices. On Android, we ask that you do this without using the manifest flag android:configChanges. Note that we're curious how you might go about solving for destroyed activities and fragments.
 3. While you are only expected to build one platform, we are looking for you to implement it in such a way that would make sharing logic between platforms easy.
 
-When reviewing your project, we will be focusing on the following areas:
-* Code architecture
-* Code quality
-* Code correctness
-* Overall creativity
+Your code will be evaluated via the following criteria:
+* Correctness
+* Polish
+* Platform Standards/Best Practices
+* Architecture/Testability
+* Readability
 
 Note: Feel free to include a text file describing your thoughts and approach if you feel that's appropriate. 
 
