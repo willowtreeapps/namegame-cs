@@ -1,35 +1,26 @@
-# The Namegame: C# / Xamarin
+# The Namegame for C# / Xamarin
 
-Leading scientists have proven, via science, that learning your coworkers names while starting a new job is useful. Your test project is to make it happen! The api is located at [https://www.willowtreeapps.com/api/v1.0/profiles](https://www.willowtreeapps.com/api/v1.0/profiles).
+Leading scientists have proven, via science, that learning your coworkers names while starting a new job is useful. Your test project is to make it happen!
 
 
 ## Your mission
 
-We're only asking you to implement this on one of the platforms (iOS or Android), but you are welcome to do as many as you'd like. All of the projects are already set up with a View Model to make working with multiple platforms easier, but you are welcome to remove it if you'd like to use a different pattern.
+We're only asking you to implement this on one of the platforms (iOS or Android), but you are welcome to do as many as you'd like.
 
-To spruce things up, implement a few features of your choice.
+1. Use this [JSON API](https://namegame.willowtreeapps.com/api/v1.0/profiles), which returns a list of employees along with their headshots, as a datasource for the game. A swagger spec for this API will be created soon to use as a reference.
 
-1. Stat tracking. How many correct / incorrect attempts did the user make? How long does it take on average for a person to identify the subject?
-2. Spruce up transitions and image loading.  Don't let images pop in and show the user that loading is happening
-3. Game modes:
-    * Mat(t) Mode. Roughly 90% of our co-workers are named Mat(t), so add a challenge mode where you only present the users with A Mat(t).
-    * Reverse mode: Show one face with 5 names. Ask the user to identify the correct name.
-4. Hint mode. As people wait, faces disappear until only the correct one is left.
-5. Insert your own idea here!
+2. Use [these Figma designs](https://www.figma.com/file/yUzRfmltt1m1UT9UkKL3y6/namegame?node-id=0%3A1) as a reference for your implementation of the game. Try to match these designs as closely as possible. All assets are either default SFSymbols or can be exported from Figma directly.
 
+3. Include an app icon, splash screen, main menu and game screen as shown in the designs. Don't forget to support tablet as well as phone devices, in both landscape and portrait mode.
 
-## Notes:
-1. This exercise should take no more than 8 hours, please do not spend more than that!
-2. The app should support portrait and landscape on all mobile devices. On Android, we ask that you do this without using the manifest flag android:configChanges. Note that we're curious how you might go about solving for destroyed activities and fragments.
-3. While you are only expected to build one platform, we are looking for you to implement it in such a way that would make sharing logic between platforms easy.
+![Tablet Main Menu](assets/screenshots/ipad_home.png)
 
-Your code will be evaluated via the following criteria:
-* Correctness
-* Polish
-* Platform Standards/Best Practices
-* Architecture/Testability
-* Readability
+4. Clicking “Practice Mode” or "Timed Mode" on the menu screen will navigate to the game screen. On the game screen, the game will select 6 employees at random from the list of employees and display their headshots in random order. Out of the 6, the name of one of those random employees will appear on the screen.
 
-Note: Feel free to include a text file describing your thoughts and approach if you feel that's appropriate. 
+5. The user must select the headshot that belongs to that person. If they guess correct the application will show that and a new 6 random employees will be displayed along with another name.
 
-Good luck and have fun!
+6. In practice mode this will continue until a user guesses incorrect in which case the screen will say “Game Over!” and display their score. Clicking "OK" will navigate them back to the Menu. 
+
+7. In timed mode the user will be able to make incorrect guesses until they find the correct user, in which case a new set of random employees will be displayed. This mode ends when a timer runs out, feel free to make the timer as long or short as you would like. Once the timer runs out, their score is displayed and clicking "OK" navigates them back to the Menu.
+
+8. You can implement this app however you choose, that said, your Name Game test project will be evaluated according to [this rubric](namegame_evaluation_rubric.pdf). 
